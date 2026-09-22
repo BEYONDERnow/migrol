@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KI fürs Migrol-Kader · Übungen</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#101E35;--mint:#33D099;--orange:#FF9220;--ink:#101E35;--muted:#61666D;--line:#DDE1E6;--bg:#F5F7F9;--card:#fff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,Arial,sans-serif;font-size:15px;line-height:1.5}
+a{color:var(--navy)}
+.top{background:var(--navy);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.top img{height:30px}
+.top .t{font-weight:800;font-size:15px}
+.top .s{font-size:12px;color:#B9C1CC}
+.top nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.top nav a{color:#fff;text-decoration:none;padding:6px 12px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.2)}
+.top nav a.on{background:var(--mint);color:var(--navy);border-color:var(--mint)}
+.wrap{max-width:900px;margin:0 auto;padding:22px 16px 80px}
+.view{display:none}.view.on{display:block}
+h1{font-size:26px;font-weight:800;margin:0 0 4px;line-height:1.15}
+.lead{color:var(--muted);margin:0 0 18px}
+h2{font-size:17px;font-weight:800;margin:26px 0 8px;display:flex;align-items:center;gap:10px}
+h2 .n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--mint);color:var(--navy);align-items:center;justify-content:center;font-size:14px;flex:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card.dark{background:var(--navy);color:#fff;border-color:var(--navy)}
+label{display:block;font-weight:600;font-size:13px;margin:10px 0 4px}
+label small{font-weight:400;color:var(--muted)}
+.card.dark label small{color:#B9C1CC}
+textarea,input[type=text]{width:100%;font:inherit;font-size:14px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);resize:vertical}
+textarea{min-height:76px}
+textarea:focus,input:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 3px rgba(51,208,153,.25)}
+.core{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.core{grid-template-columns:1fr}}
+.core .f{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+.core .f b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);margin-bottom:2px}
+.core .f b i{font-style:normal;color:var(--navy);font-size:18px;margin-right:6px;vertical-align:-1px}
+.core .f small{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+.core .f.talk{grid-column:1/-1}
+.btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:700;font-size:13px;padding:10px 16px;border-radius:10px;border:0;cursor:pointer;background:var(--navy);color:#fff}
+.btn.mint{background:var(--mint);color:var(--navy)}
+.btn.ghost{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+.btn.small{padding:7px 12px;font-size:12px}
+.card.dark .btn.ghost{color:#fff;border-color:#fff}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.prompt{background:var(--navy);color:#fff;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+.prompt .k{color:var(--mint);font-weight:800}
+.quote{border-left:3px solid var(--mint);background:var(--bg);padding:10px 14px;border-radius:0 10px 10px 0;margin:0 0 10px;font-size:13.5px}
+.quote .src{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.quote label{display:flex;gap:10px;align-items:flex-start;margin:0;font-weight:400;font-size:13.5px;cursor:pointer}
+.quote input{margin-top:4px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.chip span{display:inline-block;padding:6px 12px;border-radius:999px;border:1.5px solid var(--line);font-size:13px;font-weight:600;background:#fff;cursor:pointer}
+.chip input:checked+span{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip.g input:checked+span{background:#1FA97A;border-color:#1FA97A}
+.chip.y input:checked+span{background:#F5C542;color:var(--navy);border-color:#F5C542}
+.chip.r input:checked+span{background:#E5533D;border-color:#E5533D}
+.task{border:1.5px solid var(--navy);border-radius:14px;padding:14px 16px;margin-bottom:14px;background:#fff}
+.task .h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.task .h b{font-size:15px}
+.hint{font-size:12.5px;color:var(--muted)}
+.tag{display:inline-block;background:var(--orange);color:var(--navy);font-weight:800;font-size:11px;padding:2px 8px;border-radius:6px;margin-right:6px}
+.save{position:fixed;right:16px;bottom:16px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:12px;color:var(--muted);box-shadow:0 4px 16px rgba(0,0,0,.08);z-index:5}
+.save b{color:#1FA97A}
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.home a{display:block;text-decoration:none;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:18px}
+.home a:hover{border-color:var(--mint)}
+.home .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);font-weight:800}
+.home h3{margin:6px 0 4px;font-size:18px}
+.home p{margin:0;color:var(--muted);font-size:13px}
+details{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:#fff;margin-bottom:14px}
+summary{cursor:pointer;font-weight:700;font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px}
+th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1.5px solid var(--navy);padding:6px 8px}
+td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:64px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+.toast.on{opacity:1}
+/* Druck */
+@media print{
+ @page{size:A4;margin:14mm}
+ body{background:#fff;font-size:11pt}
+ .top,.save,.toast,.btn,.row,.noprint,nav{display:none!important}
+ .wrap{max-width:none;padding:0}
+ .view{display:none}.view.print{display:block;break-before:page}.view.print:first-of-type{break-before:auto}
+ .quote:not(:has(input:checked)){display:none}
+ .quote input{display:none}
+ .card,.task,.core .f,details{break-inside:avoid;border-color:#999}
+ details{border:0;padding:0}
+ details>*:not(summary){display:none}
+ summary{display:none}
+ textarea,input[type=text]{border:0;padding:0;background:transparent;resize:none;min-height:0;height:auto}
+ .pv{white-space:pre-wrap;border-left:2px solid #33D099;padding:2px 10px;margin:2px 0 8px;min-height:1em}
+ .pv:empty::before{content:"—";color:#999}
+ .chip span{border:1px solid #999}
+ .chip input:checked+span{background:#101E35!important;color:#fff!important}
+ .chip:not(:has(input:checked)){display:none}
+ .prompt{background:#F5F7F9;color:#101E35;border:1px solid #ccc}
+ .prompt .k{color:#101E35}
+ .card.dark{background:#fff;color:#101E35;border:1px solid #999}
+ .card.dark label small{color:#555}
+ .phead{display:block!important;border-bottom:2px solid #33D099;padding-bottom:6px;margin-bottom:12px;font-size:10pt;color:#555}
+ .phead b{color:#101E35}
+}
+.phead{display:none}
+.pv{display:none}
+@media print{textarea,input[type=text]{display:none}.pv{display:block}}
+</style>
+</head>
+<body>
+<header class="top">
+  <img src="data:image/png;base64,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" alt="BEYONDER">
+  <div><div class="t">KI fürs Migrol-Kader</div><div class="s">Kadertagung 23. September 2026 · Übungen</div></div>
+  <nav>
+    <a href="#start" data-v="start">Start</a>
+    <a href="#uebung1" data-v="uebung1">Übung 1</a>
+    <a href="#uebung2" data-v="uebung2">Übung 2</a>
+    <a href="#uebung3" data-v="uebung3">Übung 3</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+<!-- ============================================================ START -->
+<section class="view" id="v-start">
+  <h1>Drei Übungen. Alles bleibt auf deinem Gerät.</h1>
+  <p class="lead">Was du hier eintippst, wird automatisch in deinem Browser gespeichert. Kein Konto, kein Server. Am Schluss holst du dir alles als PDF.</p>
+  <div class="home">
+    <a href="#uebung1"><div class="k">Übung 1 · 20 Minuten · zu zweit</div><h3>Deine Aufgabe. Zweimal.</h3><p>Prompt A in einem Satz, Prompt B mit CORE+. Vergleiche.</p></a>
+    <a href="#uebung2"><div class="k">Übung 2 · 20 Minuten · zu zweit</div><h3>Euer Ton. Als Prompt.</h3><p>Sechs echte Migrol-Texte. Stil beschreiben lassen, Rules-Block bauen, neuen Text schreiben.</p></a>
+    <a href="#uebung3"><div class="k">Übung 3 · 25 Minuten · pro Gruppe</div><h3>Geht es heute schon?</h3><p>Drei Aufgaben aus eurem Alltag. Machbarkeit statt ROI.</p></a>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <label>Dein Name <small>(optional, erscheint auf dem PDF)</small></label>
+    <input type="text" data-key="name" placeholder="Vorname Name">
+    <label>Bereich</label>
+    <input type="text" data-key="bereich" placeholder="z. B. Energie, Mobilität, Finanzen & Controlling">
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0">Fünf Sätze, die das meiste erklären</h2>
+    <ol style="padding-left:20px;margin:0">
+      <li><b>Es rät das nächste Wort.</b> Sehr gut, aber es rät. Ein flüssiger Satz ist noch kein wahrer Satz.</li>
+      <li><b>Es weiss nichts über euch.</b> Nur, was ihr hineinlegt. Wie eine neue Mitarbeiterin am ersten Tag.</li>
+      <li><b>Der Kontext ist wie ein Tisch.</b> Wird es zu viel, fällt hinten etwas runter. Ein Chat, eine Aufgabe.</li>
+      <li><b>Es sagt fast nie «weiss ich nicht».</b> Darum: «Markiere, wo du dir nicht sicher bist.»</li>
+      <li><b>Ein starkes Modell verzeiht einen schlechten Prompt.</b> Ihr bezahlt mit Zeit und Limit.</li>
+    </ol>
+  </div>
+  <div class="card">
+    <p style="margin:0"><span class="tag">Ampel</span> <b>Grün</b> öffentlich · <b>Gelb</b> Label «Intern» · <b>Rot</b> «Vertraulich», «Geheim», Personendaten. Rot gehört in kein Gratis-Konto. Nie.</p>
+  </div>
+  <div class="row noprint">
+    <button class="btn" onclick="printAll()">Alles als PDF</button>
+    <button class="btn ghost" onclick="resetAll()">Alle Eingaben löschen</button>
+  </div>
+</section>
+
+<!-- ============================================================ ÜBUNG 1 -->
+<section class="view" id="v-uebung1">
+  <div class="phead"><b>Übung 1 · Deine Aufgabe. Zweimal.</b> · <span class="pn"></span> · KI fürs Migrol-Kader · 23.9.2026 · BEYONDER</div>
+  <h1>Deine Aufgabe. Zweimal.</h1>
+  <p class="lead">Übung 1 · 20 Minuten · zu zweit, ein Copilot pro Paar. Nimm eine echte Aufgabe von dieser Woche: Mail, Konzept, Auswertung, Stellenausschreibung.</p>
+
+  <h2><span class="n">1</span>Die Aufgabe</h2>
+  <div class="card">
+    <label>Was soll entstehen? <small>Ein Satz für dich, noch kein Prompt.</small></label>
+    <textarea data-key="u1_aufgabe" placeholder="z. B. Kundenbrief nach Tankrevision mit Empfehlung für Tankersatz im Frühling"></textarea>
+  </div>
+
+  <h2><span class="n">2</span>Prompt A · ein Satz</h2>
+  <div class="card">
+    <label>So, wie du es heute im Chat tippen würdest</label>
+    <textarea data-key="u1_promptA" placeholder="Schreib mir einen Kundenbrief zur Tankrevision."></textarea>
+    <div class="row"><button class="btn small ghost" onclick="copyKey('u1_promptA')">Prompt A kopieren</button></div>
+    <label>Ergebnis A <small>(aus dem KI-Chat einkleben, gekürzt reicht)</small></label>
+    <textarea data-key="u1_ergA"></textarea>
+  </div>
+
+  <h2><span class="n">3</span>Prompt B · CORE+</h2>
+  <div class="card">
+    <div class="core">
+      <div class="f"><b><i>C</i>Character</b><small>Wer soll die KI sein? Fachrolle, du selbst mit deiner Firma, oder dein Kunde.</small><textarea data-key="u1_c" placeholder="Du bist Kundenberater im Technischen Dienst der Migrol AG …"></textarea></div>
+      <div class="f"><b><i>O</i>Objective</b><small>Was soll entstehen, für wen, und was soll es beim Empfänger auslösen?</small><textarea data-key="u1_o" placeholder="Ein Brief an Familie Muster, 6 Sätze. Der Kunde soll die Revision im Frühling buchen …"></textarea></div>
+      <div class="f"><b><i>R</i>Rules</b><small>Format, Ton, Grenzen. Positiv formuliert.</small><textarea data-key="u1_r" placeholder="Per Sie. Sachlich, verlässlich. Betreffzeile. Keine Werbung …"></textarea></div>
+      <div class="f"><b><i>E</i>Example</b><small>Ein Beispiel anhängen statt beschreiben. Der stärkste Hebel.</small><textarea data-key="u1_e" placeholder="So klingt ein Brief von uns: «…»"></textarea></div>
+      <div class="f talk"><b><i>+</i>Talk</b><small>Lass sie fragen, bevor sie loslegt.</small><textarea data-key="u1_t" style="min-height:52px">Stell mir zuerst drei Rückfragen. Beginne erst nach meiner Antwort.</textarea></div>
+    </div>
+    <div class="row">
+      <button class="btn mint" onclick="copyText(buildU1())">Prompt B zusammensetzen und kopieren</button>
+      <span class="hint">Langer Kontext an den Anfang, Aufgabe zum Schluss.</span>
+    </div>
+    <label>Ergebnis B <small>(einkleben)</small></label>
+    <textarea data-key="u1_ergB"></textarea>
+  </div>
+
+  <h2><span class="n">4</span>Der eine grösste Unterschied</h2>
+  <div class="card">
+    <label>Was hat Prompt B besser gemacht? Ein Satz.</label>
+    <textarea data-key="u1_diff"></textarea>
+  </div>
+  <p class="hint"><span class="tag">Notfall ohne Copilot</span> ChatGPT ohne Konto: dann nur mit einer Aufgabe ohne Namen, Preise und Verträge (Ampel grün).</p>
+  <div class="row noprint">
+    <button class="btn" onclick="printView('uebung1')">Übung 1 als PDF</button>
+    <a class="btn ghost" href="#uebung2">Weiter zu Übung 2</a>
+  </div>
+</section>
+
+<!-- ============================================================ ÜBUNG 2 -->
+<section class="view" id="v-uebung2">
+  <div class="phead"><b>Übung 2 · Euer Ton. Als Prompt.</b> · <span class="pn"></span> · KI fürs Migrol-Kader · 23.9.2026 · BEYONDER</div>
+  <h1>Euer Ton. Als Prompt.</h1>
+  <p class="lead">Übung 2 · 20 Minuten · zu zweit. Gutes Ergebnis rein, Prompt raus. Das Ziel ist nicht der Text. Das Ziel ist der Rules-Block.</p>
+
+  <h2><span class="n">1</span>Zwei Texte wählen</h2>
+  <div class="card">
+    <p class="hint" style="margin:0 0 10px">Sechs echte Migrol-Texte, drei an Kunden, drei intern. Alle Ampel grün oder gelb. Eigene Kundenmails mit Namen: nur in Copilot.</p>
+    <div id="texte"></div>
+    <label>Oder ein eigener Text aus deinem Bereich</label>
+    <textarea data-key="u2_eigen" placeholder="Ohne Namen, Preise und Verträge, wenn du ohne Copilot arbeitest."></textarea>
+  </div>
+
+  <h2><span class="n">2</span>Stil beschreiben lassen</h2>
+  <div class="card dark">
+    <div class="prompt" id="u2_p1"></div>
+    <div class="row"><button class="btn mint" onclick="copyText(document.getElementById('u2_p1').innerText)">Prompt kopieren</button></div>
+  </div>
+
+  <h2><span class="n">3</span>Rules-Block</h2>
+  <div class="card">
+    <label>Was die KI zurückgibt, hier einkleben <small>(und kürzen, wo du anderer Meinung bist)</small></label>
+    <textarea data-key="u2_rules" style="min-height:130px"></textarea>
+  </div>
+
+  <h2><span class="n">4</span>Einen neuen Text schreiben lassen</h2>
+  <div class="card">
+    <div class="core">
+      <div class="f"><b>Kundengruppe oder Empfänger</b><textarea data-key="u2_an" style="min-height:52px" placeholder="Heizölkunden, Franchisepartner, Team …"></textarea></div>
+      <div class="f"><b>Thema aus deinem Bereich</b><textarea data-key="u2_thema" style="min-height:52px" placeholder="Tankrevision im Frühling, neue Ladepunkte, Monatsabschluss …"></textarea></div>
+      <div class="f talk"><b>Wirkung beim Empfänger</b><textarea data-key="u2_wirkung" style="min-height:52px" placeholder="soll die Offerte anfordern / soll sich sicher fühlen / soll bis Freitag antworten"></textarea></div>
+    </div>
+    <div class="prompt" id="u2_p2" style="margin-top:12px"></div>
+    <div class="row"><button class="btn mint" onclick="copyText(document.getElementById('u2_p2').innerText)">Prompt kopieren</button></div>
+    <label>Der neue Text <small>(einkleben)</small></label>
+    <textarea data-key="u2_text" style="min-height:110px"></textarea>
+  </div>
+
+  <h2><span class="n">5</span>Tausch mit dem Nachbarn</h2>
+  <div class="card">
+    <label>Klingt das nach Migrol?</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="u2_urteil" value="Ja" data-key="u2_urteil"><span>Ja</span></label>
+      <label class="chip"><input type="radio" name="u2_urteil" value="Fast" data-key="u2_urteil"><span>Fast</span></label>
+      <label class="chip"><input type="radio" name="u2_urteil" value="Nein" data-key="u2_urteil"><span>Nein</span></label>
+    </div>
+    <label>Eine Korrektur</label>
+    <textarea data-key="u2_korrektur" style="min-height:52px"></textarea>
+  </div>
+  <div class="row noprint">
+    <button class="btn" onclick="printView('uebung2')">Übung 2 als PDF</button>
+    <a class="btn ghost" href="#uebung3">Weiter zu Übung 3</a>
+  </div>
+</section>
+
+<!-- ============================================================ ÜBUNG 3 -->
+<section class="view" id="v-uebung3">
+  <div class="phead"><b>Übung 3 · Geht es heute schon?</b> · <span class="pn"></span> · KI fürs Migrol-Kader · 23.9.2026 · BEYONDER</div>
+  <h1>Geht es heute schon?</h1>
+  <p class="lead">Übung 3 · 25 Minuten · pro Gruppe. Drei Aufgaben, die euch heute Zeit fressen. Keine ROI-Übung. Eine Machbarkeits-Challenge.</p>
+
+  <div class="card">
+    <label>Gruppe</label>
+    <div class="chips" id="gruppen"></div>
+  </div>
+
+  <details class="noprint"><summary>Beispiele pro Gruppe («schon getestet» = aus dem Copilot-Testlauf bei Migrol)</summary>
+    <table id="bsp"></table>
+  </details>
+
+  <div id="tasks"></div>
+
+  <div class="card">
+    <label>Die eine Aufgabe für die Wand</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="u3_wand" value="1" data-key="u3_wand"><span>Aufgabe 1</span></label>
+      <label class="chip"><input type="radio" name="u3_wand" value="2" data-key="u3_wand"><span>Aufgabe 2</span></label>
+      <label class="chip"><input type="radio" name="u3_wand" value="3" data-key="u3_wand"><span>Aufgabe 3</span></label>
+    </div>
+    <p class="hint" style="margin:10px 0 0">Nach 25 Minuten: 60 Sekunden pro Gruppe. Aufgabe, Form, was im Weg steht.</p>
+  </div>
+
+  <h2>Dieselbe Frage. Mit Briefing.</h2>
+  <div class="card dark">
+    <div class="prompt">Du bist Kaderperson bei Migrol AG, Zürich, 230 Mitarbeitende, 310 Tankstellen, Heizöl, M-Charge mit 1'000 Ladepunkten, Teil der Migros-Gruppe. Beschreibe in 5 Sätzen, was Migrol tut. Markiere, was du nicht sicher weisst. <span class="k">Stell mir zuerst 2 Rückfragen.</span></div>
+    <div class="row"><button class="btn mint" onclick="copyText(this.parentNode.previousElementSibling.innerText)">Prompt kopieren</button></div>
+  </div>
+
+  <h2>Deine Montag-Karte · 16 Minuten. Jeden Arbeitstag.</h2>
+  <div class="card">
+    <ol style="padding-left:20px;margin:0 0 10px">
+      <li>Im Kalender, während der Arbeitszeit. Titel: KI.</li>
+      <li>Der Rules-Block von heute in die Copilot-Anweisung.</li>
+      <li>Eine echte Aufgabe pro Woche mit CORE+. Erst Prompt A, dann B.</li>
+    </ol>
+    <div class="prompt">Hier ist meine Aufgabe: [A]. Stell mir zuerst 3 Rückfragen und warte auf meine Antwort. Erst dann arbeitest du. Am Schluss markierst du, wo du dir nicht sicher bist.</div>
+    <div class="row"><button class="btn small ghost" onclick="copyText(this.parentNode.previousElementSibling.innerText)">Prompt kopieren</button></div>
+    <label>Meine Aufgabe für Montag</label>
+    <textarea data-key="u3_montag" style="min-height:52px"></textarea>
+  </div>
+  <div class="row noprint">
+    <button class="btn" onclick="printView('uebung3')">Übung 3 als PDF</button>
+    <button class="btn ghost" onclick="printAll()">Alle drei Übungen als PDF</button>
+  </div>
+</section>
+
+</main>
+
+<div class="save" id="save">Gespeichert in diesem Browser</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ------------------------------------------------------------ Daten
+const TEXTE = [
+ ["Kundenmailing · Energie-Coaching, 18.9.2026","Sehr geehrter Herr Waltert\nDas Energie-Coaching steht Ihnen für Liegenschaften in der Stadt Zürich kostenfrei oder stark vergünstigt zur Verfügung. Mit einer professionellen Beratung erhalten Sie eine klare Einschätzung Ihrer aktuellen Situation sowie konkrete Empfehlungen, wie Sie Energie sparen, Kosten senken und den Wohnkomfort verbessern können. Melden Sie sich bei Interesse an einem Energie-Coaching einfach unter 044 495 12 12 oder energie@migrol.ch.\nFreundliche Grüsse, Ihre Migrol"],
+ ["Kundenmailing · HEV-Aktion, 18.9.2026","HEV-Mitglieder profitieren aktuell von einer Sonderaktion mit Rabatten auf Heizöl, Tankrevisionen und Boilerentkalkungen, z.B. CHF 2.– Rabatt pro 100 Liter Heizöl (für Bestellmengen bis max. 15'999 Liter). Diese Aktion ist ausschliesslich für Mitglieder des Hauseigentümerverbands (HEV) Schweiz gültig. So funktioniert's: Besuchen Sie die HEV-Mitgliederseite. Loggen Sie sich mit Ihren Mitgliedsdaten ein. Erhalten Sie alle Details zur Aktion. Bestellen Sie jetzt. Die Sonderaktion endet am 27. September 2026!"],
+ ["Kundenmailing · Cumulus-Angebote","Wussten Sie, dass Sie auch bei Migrol Cumulus-Punkte sammeln können? Profitieren Sie bis zum 1. September 2026 von einmalig 2000 Bonuspunkten pro Heizölbestellung, Holzpelletsbestellung, Tankrevisionsauftrag sowie Boilerentkalkungsauftrag. So einfach punkten Sie: Geben Sie bei Ihrer Bestellung Ihre persönliche Cumulus-Nummer an."],
+ ["Intranet · Mitarbeitervorteile","Produkte und Dienstleistungen mit Mitarbeiterrabatt: CHF 2.– Rabatt pro 100 Liter auf Heizöl, CHF 2.– Rabatt pro 100 Kilogramm auf Holzpellets, CHF 100.– Rabatt auf den Gesamtpreis einer Tankrevision oder Boilerentkalkung. Diese Vorzugskonditionen sind gültig bei Bestellmengen bis 15'999 Liter bzw. 17'999 Kilogramm und sind nicht mit anderen Aktionen, Rabatten oder Gutscheinen kumulierbar. Anfragen können über unsere Website vorgenommen werden."],
+ ["Interner Newsletter · Datenklassifizierung in Microsoft 365, 26.5.2026","Um Migrol-Daten besser zu schützen und den bewussten Umgang mit Informationen zu fördern, wird in Microsoft 365 die Funktion «Vertraulichkeit» verwendet. Damit können Dokumente und E-Mails mit Labels wie «Intern», «Vertraulich» oder «Geheim» klassifiziert werden. Ab der Stufe «Vertraulich» oder «Geheim» wird ein technischer Schutz angewendet. Im Zweifelsfall ist die Klassifizierung im Team oder mit der zuständigen Führungskraft abzustimmen."],
+ ["Intranet · M-Charge erreicht 1'000 Ladepunkte","Heute hat M-Charge in Schlieren (ZH) den 1'000. Ladepunkt in Betrieb genommen. Mit diesem Meilenstein erreicht Migrol die Halbzeit des Ausbauziels von insgesamt 2'000 Ladepunkten bis Ende 2029. Das M-Charge-Netz umfasst heute Ladepunkte an Migros-Standorten sowie bei Migrol-Tankstellen in der ganzen Schweiz. Bis Ende 2026 sollen rund 1'250 Ladepunkte in Betrieb sein."]
+];
+const GRUPPEN = [
+ ["Energie","Offerte Tankrevision nach Diktat (Chat) · Antwort auf Preisanfrage Heizöl, Ampel gelb (Chat, im Loop beim Preis) · Einsatzplanung Tankrevisions-Equipen (Workflow)"],
+ ["Mobilität","Reklamations-Triage Car Wash (Agent) · Partner-Info übersetzen F/I (Chat, aus dem Loop) · Kontrollpunkte in Prüffragen umwandeln (Chat, schon getestet)"],
+ ["Finanzen & Controlling","Kommentar zum Monatsabschluss aus Zahlen (Chat) · Sitzungsprotokoll aus Teams-Aufnahme (Chat, schon getestet) · Belegprüfung als Workflow, Hürde SAP-Anbindung"],
+ ["IT-Betrieb","Ticket-Vorqualifikation (Workflow) · Inventarlisten zusammenführen (Chat, schon getestet) · Copilot-Manager-Rolle beschreiben (Chat)"],
+ ["Business & Markt","Plakatstellen-Angebot prüfen (Chat, schon getestet) · Tarifvergleich Schnellladen für M-Charge (Agent) · Störungsmeldung Ladepunkt klassifizieren (Workflow)"],
+ ["Supply & Leitung","Lieferantenvertrag vergleichen (Chat, schon getestet) · Dispo-Umplanung bei Fahrzeugausfall (Agent) · Stellenausschreibung im Migrol-Ton (Chat) · Bewerbungen vorsortieren: rot, im Loop"]
+];
+const NS = "migrol-kader-2026:";
+
+// ------------------------------------------------------------ Aufbau
+function chips(name, opts, cls){ return opts.map(o=>`<label class="chip ${cls?cls(o):''}"><input type="radio" name="${name}" value="${o}" data-key="${name}"><span>${o}</span></label>`).join(""); }
+function checks(name, opts){ return opts.map(o=>`<label class="chip"><input type="checkbox" value="${o}" data-key="${name}_${o.replace(/\W/g,'')}"><span>${o}</span></label>`).join(""); }
+
+document.getElementById("texte").innerHTML = TEXTE.map((t,i)=>`<div class="quote"><label><input type="checkbox" data-key="u2_sel${i}"><span>${t[1].replace(/\n/g,"<br>")}<span class="src">${t[0]}</span></span></label></div>`).join("");
+document.getElementById("gruppen").innerHTML = chips("u3_gruppe", GRUPPEN.map(g=>g[0]));
+document.getElementById("bsp").innerHTML = "<tr><th>Gruppe</th><th>Mögliche Aufgaben</th></tr>"+GRUPPEN.map(g=>`<tr><td><b>${g[0]}</b></td><td>${g[1].split(" · ").join("<br>")}</td></tr>`).join("");
+document.getElementById("tasks").innerHTML = [1,2,3].map(n=>`
+<div class="task">
+  <div class="h"><b>Aufgabe ${n}</b><span class="hint">Was frisst heute Zeit?</span></div>
+  <textarea data-key="u3_t${n}_aufgabe" style="min-height:56px" placeholder="Die Aufgabe in einem Satz. Wer macht sie heute, wie oft, wie lange?"></textarea>
+  <label>Chat, Workflow oder Agent?</label>
+  <div class="chips">${chips("u3_t"+n+"_form",["Chat","Workflow","Agent"])}</div>
+  <label>Wo bleibt der Mensch?</label>
+  <div class="chips">${chips("u3_t"+n+"_loop",["im Loop","auf dem Loop","aus dem Loop"])}</div>
+  <label>Ampel</label>
+  <div class="chips">${chips("u3_t"+n+"_ampel",["grün","gelb","rot"],o=>({grün:"g",gelb:"y",rot:"r"})[o])}</div>
+  <label>Was steht im Weg?</label>
+  <div class="chips">${checks("u3_t"+n+"_weg",["Daten","Regeln","Kompetenz","Anbindung"])}</div>
+  <textarea data-key="u3_t${n}_notiz" style="min-height:44px;margin-top:8px" placeholder="Notiz: was genau steht im Weg, wer müsste es lösen?"></textarea>
+  <label>Status</label>
+  <div class="chips">${checks("u3_t"+n+"_status",["In 2 Tagen testbar","Gerade im KI-Chat ausprobiert"])}</div>
+</div>`).join("");
+
+// ------------------------------------------------------------ Speichern
+const fields = () => document.querySelectorAll("[data-key]");
+function load(){
+  fields().forEach(el=>{
+    const v = localStorage.getItem(NS+el.dataset.key);
+    if (v===null) return;
+    if (el.type==="checkbox") el.checked = v==="1";
+    else if (el.type==="radio") el.checked = el.value===v;
+    else el.value = v;
+  });
+}
+function save(el){
+  try{
+    if (el.type==="checkbox") localStorage.setItem(NS+el.dataset.key, el.checked?"1":"0");
+    else localStorage.setItem(NS+el.dataset.key, el.value);
+    const s=document.getElementById("save"); s.innerHTML="<b>✓</b> Gespeichert "+new Date().toLocaleTimeString("de-CH",{hour:"2-digit",minute:"2-digit"});
+  }catch(e){ document.getElementById("save").textContent="Speichern nicht möglich (privater Modus?)"; }
+  refresh();
+}
+document.addEventListener("input", e=>{ if(e.target.dataset.key) save(e.target); });
+document.addEventListener("change", e=>{ if(e.target.dataset.key) save(e.target); });
+function resetAll(){
+  if(!confirm("Alle Eingaben in diesem Browser löschen?")) return;
+  Object.keys(localStorage).filter(k=>k.startsWith(NS)).forEach(k=>localStorage.removeItem(k));
+  fields().forEach(el=>{ if(el.type==="checkbox"||el.type==="radio") el.checked=false; else if(el.dataset.key!=="u1_t") el.value=""; });
+  refresh(); toast("Gelöscht.");
+}
+const val = k => { const el=document.querySelector(`[data-key="${k}"]`); return el? (el.value||"").trim():""; };
+
+// ------------------------------------------------------------ Prompts
+function buildU1(){
+  const p=[];
+  if(val("u1_c")) p.push("Character: "+val("u1_c"));
+  if(val("u1_e")) p.push("Example, so klingt es bei uns:\n"+val("u1_e"));
+  if(val("u1_r")) p.push("Rules: "+val("u1_r"));
+  if(val("u1_o")) p.push("Objective: "+val("u1_o"));
+  if(val("u1_t")) p.push(val("u1_t"));
+  return p.join("\n\n");
+}
+function selectedTexts(){
+  const t = TEXTE.filter((_,i)=>document.querySelector(`[data-key="u2_sel${i}"]`).checked).map(x=>x[1]);
+  if(val("u2_eigen")) t.push(val("u2_eigen"));
+  return t;
+}
+function refresh(){
+  const t = selectedTexts();
+  const n = t.length||2;
+  document.getElementById("u2_p1").innerHTML = `Hier ${n===1?"ist ein Text":"sind "+n+" Texte"} von Migrol. Beschreibe den Stil so genau, dass du ihn nachbauen kannst: Anrede, Satzlänge, Wortwahl, Haltung zum Kunden, was vermieden wird. Gib mir die Beschreibung als <span class="k">Rules-Block</span> für einen Prompt, höchstens 8 Zeilen.\n\n` + (t.length? t.map((x,i)=>`[Text ${i+1}]\n${esc(x)}`).join("\n\n") : "[Text 1]\n[Text 2]");
+  document.getElementById("u2_p2").innerHTML =
+   `<span class="k">Character:</span> Du schreibst für Migrol AG an ${esc(val("u2_an"))||"[Kundengruppe oder Empfänger]"}.\n<span class="k">Objective:</span> Eine Info zu ${esc(val("u2_thema"))||"[Thema aus meinem Fachbereich]"}, 5 Sätze. Der Empfänger ${esc(val("u2_wirkung"))||"[soll …]"}.\n<span class="k">Rules:</span>\n${esc(val("u2_rules"))||"[Rules-Block von oben]"}\n<span class="k">Example:</span>\n${t[0]?esc(t[0]):"[einer der Texte]"}\n<span class="k">Talk:</span> Stell mir zuerst 2 Rückfragen. Beginne erst nach meiner Antwort.`;
+  // Druck-Vorschau der Textfelder
+  document.querySelectorAll("textarea[data-key],input[type=text][data-key]").forEach(el=>{
+    let pv = el.nextElementSibling; if(!pv||!pv.classList.contains("pv")){ pv=document.createElement("div"); pv.className="pv"; el.after(pv); }
+    pv.textContent = el.value;
+  });
+  document.querySelectorAll(".pn").forEach(e=>e.textContent=[val("name"),val("bereich")].filter(Boolean).join(" · ")||"");
+}
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+// ------------------------------------------------------------ Kopieren, Drucken, Navigation
+function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1600); }
+function copyText(s){
+  if(!s.trim()){ toast("Noch nichts zum Kopieren."); return; }
+  navigator.clipboard.writeText(s).then(()=>toast("Kopiert. Jetzt in den KI-Chat einfügen.")).catch(()=>{ prompt("Kopieren:", s); });
+}
+function copyKey(k){ copyText(val(k)); }
+function printView(v){ document.querySelectorAll(".view").forEach(x=>x.classList.toggle("print", x.id==="v-"+v)); refresh(); window.print(); }
+function printAll(){ document.querySelectorAll(".view").forEach(x=>x.classList.toggle("print", x.id!=="v-start")); refresh(); window.print(); }
+function route(){
+  const h=(location.hash||"#start").slice(1);
+  const id = document.getElementById("v-"+h) ? h : "start";
+  document.querySelectorAll(".view").forEach(x=>x.classList.toggle("on", x.id==="v-"+id));
+  document.querySelectorAll(".top nav a").forEach(a=>a.classList.toggle("on", a.dataset.v===id));
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+load(); refresh(); route();
+</script>
+</body>
+</html>
